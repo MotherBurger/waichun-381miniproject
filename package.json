@@ -1,0 +1,20 @@
+{
+	"name": "waichun-381miniproject",
+	"description": "COMPS381FProject 2017 Autumn Term for TSANG, Wai Chun & LAM, Siu Wing",
+	"version": "1.0.0",
+	"main": "server.js",
+	"dependencies": {
+		"body-parser": "latest",
+		"cookie-session": "latest",
+		"ejs": "latest",
+		"express": "latest",
+		"express-fileupload": "latest",
+		"fs": "latest",
+		"mongodb": "latest",
+		"nodemon": "^1.12.1"
+	},
+	"scripts": {
+		"start": "nodemon server",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	}
+}

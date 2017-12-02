@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html class="gr__waichun-381miniproject_mybluemix_net">
+  <head>
+    <title>
+      Restaurants
+    </title>
+    <link rel="stylesheet" type="text/css" href="/css/w3.css"/>
+  </head>
+  <body>
+    <header class="w3-container w3-blue">
+      <h1>Restaurants</h1>
+    </header>
+    <div class="w3-container w3-quarter w3-margin-top">
+      <p><strong>Welcome <%= id %>!</strong></p>
+      <p>Currently showing <%= r.length %> document(s).</p>
+      <br />
+      <p>Criteria: </p>
+      <p>
+        <% if(criteria != {}) { %>
+          <%= criteria %>
+        <% } else { %>
+          Showing all restaurants.
+        <% } %>
+      </p>
+    </div>
+    <div class="w3-container w3-half w3-margin-top">
+    <% if (r.length > 0) { %>
+      <table class="w3-table-all w3-card-4">
+        <tr class="w3-light-blue">
+          <th style="width: 40%">Restaurant ID</th>
+          <th style="width: 60%">Name</th>
+        </tr>
+        <% r.forEach(function(rest) { %>
+          <tr>
+            <td>
+              <%= rest.restaurant_id %>
+            </td>
+            <td>
+              <a href= <%= "/display/"+rest._id %> >
+                <%= rest.name %>
+              </a>
+            </td>
+          </tr>
+        <% }); %>
+      </table>
+    <% } else { %>
+      <h2>Nothing to show!</h2>
+    <% } %>
+    </div>
+    <div class="w3-quarter w3-margin-top">
+      <p><button onclick="window.location.href='/create'" class="w3-button w3-blue">Create New Restaurant</button></p>
+      <p><button onclick="document.getElementById('searchModal').style.display='block'" class="w3-button w3-blue">Search</button></p>
+      <p><button onclick="window.location.href='/logout'" class="w3-button w3-blue">Logout</button></p>
+    </div>
+    <div class="w3-modal" id="searchModal">
+      <div class="w3-modal-content w3-card-4" style="width: 50%;">
+        <header class="w3-container w3-blue">
+          <span onclick="document.getElementById('searchModal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <h2>Search by followings:</h2>
+        </header>
+        <div class="w3-container w3-center">
+          <form id="searchform" role='form' action="/search" method="POST" encType="multipart/form-data">
+            <div class="w3-container w3-light-gray w3-card-4" style="width: 100%;">
+              <table style="width: 100%;">
+                <tr>
+                  <td class="w3-center" style="width: 30%;">Attribute Name</td>
+                  <td style="width: 70%;"><input type="text" style="width: 100%;" name="title"></td>
+                </tr>
+                <tr>
+                  <td class="w3-center">Value</td>
+                  <td><input type="text" style="width: 100%;" name="value"></td>
+                </tr>
+              </table>
+              <br />
+              <input id="searchbtn" type="submit" class="w3-button w3-blue"/>
+              <br />
+              <br />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

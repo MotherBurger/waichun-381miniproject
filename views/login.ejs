@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="gr__waichun-381miniproject_mybluemix_net">
+  <head>
+    <title>
+      Login
+    </title>
+    <link rel="stylesheet" type="text/css" href="/css/w3.css"/>
+  </head>
+  <body>
+    <header class="w3-container w3-blue">
+      <h1>Login</h1>
+    </header>
+    <div class="w3-quarter w3-margin-top">
+
+    </div>
+    <div class="w3-container w3-half w3-margin-top">
+      <form action="/tologin" method="post" class="w3-container w3-card-4 w3-dark-grey">
+        <p>
+          <input name="id" class="w3-input" type="text" required/>
+          <label class="w3-label w3-validate">Username</label>
+        </p>
+        <p>
+          <input name="pw" class="w3-input" type="password" required/>
+          <label class="w3-label w3-validate">Password</label>
+        </p>
+        <div class="w3-container w3-row-padding w3-center">
+          <div class="w3-col">
+            <input type="submit" value="Submit" class="w3-button w3-third w3-green"/>
+            <button type="reset" class="w3-button w3-third w3-blue">Reset</button>
+            <button onclick="window.location.href='/register'" class="w3-button w3-third w3-teal">Register</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="w3-quarter w3-margin-top">
+
+    </div>
+  </body>
+</html>

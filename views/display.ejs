@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="gr__waichun-381miniproject_mybluemix_net">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <head>
+    <title>
+      <%= r.name %>
+    </title>
+    <link rel="stylesheet" type="text/css" href="/css/w3.css"/>
+  </head>
+  <body>
+    <header class="w3-container w3-blue">
+      <h1>
+        <%= r.name %>
+      </h1>
+    </header>
+    <div class="w3-container w3-margin-top w3-card-4">
+      <% if(Object.keys(r.photo).length != 0){ %>
+      <div class="w3-container w3-center">
+        <img style="max-width: 800px;" class="w3-card-4" alt= <%= r.name %> src= <%="data:" + r.photo.mimetype + ";base64," + JSON.parse(JSON.stringify(r.photo.data)) %> />
+        <br /><br />
+      </div>
+      <% } %>
+      <table class="w3-table-all w3-card-4">
+        <tr>
+          <td>Borough</td>
+          <td><%= r.borough || 'Not Provided' %></td>
+        </tr>
+        <tr>
+          <td>Cuisine</td>
+          <td><%= r.cuisine || 'Not Provided' %></td>
+        </tr>
+        <tr>
+          <td colspan=2><strong>Address</strong></td>
+        </tr>
+        <tr>
+          <td>Street</td>
+          <td><%= r.address.street || 'Not Provided' %></td>
+        </tr>
+        <tr>
+          <td>Building</td>
+          <td><%= r.address.building || 'Not Provided' %></td>
+        </tr>
+        <tr>
+          <td>Zipcode</td>
+          <td><%= r.address.zipcode || 'Not Provided' %></td>
+        </tr>
+        <tr>
+          <td>GPS</td>
+          <td>
+            <% if(r.address.coord.lat&&r.address.coord.lon){ %>
+            [ <%= r.address.coord.lat %> , <%= r.address.coord.lon %> ]
+            <div id="map" class="w3-container w3-card-4" style='width: 600px; height: 400px;'></div>
+            <% } else { %>
+              Not Provided
+            <% } %>
+          </td>
+        </tr>
+        <tr>
+          <td>Created by</td>
+          <td><%= r.owner || 'Not Provided' %></td>
+        </tr>
+        <tr>
+          <td>Rating</td>
+          <td>
+            <ol>
+              <% r.grades.forEach(function(score){ %>
+                <li>
+                  <%= score.score + " (Rated by " + score.user + ")" %>
+                </li>
+              <% }) %>
+            </ol>
+          </td>
+        </tr>
+      </table>
+      <br />
+      <button onclick="window.location.href='/home'" id="homebtn" class="w3-button w3-teal">Back to Home</button>
+      <button onclick="document.getElementById('rateModal').style.display='block'" id="ratebtn" class="w3-button w3-orange">Rate this restaurant</button>
+      <% if(r.owner == session.id || session.id == 'admin') { %>
+        <button onclick="<%="window.location.href='/edit/" + r._id +"'"%>" id="editbtn" class="w3-button w3-cyan">Edit this restaurant</button>
+        <button onclick="<%="window.location.href='/delete/" + r._id +"'"%>" id="delbtn" class="w3-button w3-red">Delete this restaurant</button>
+      <% } %>
+    </div>
+  </body>
+  <div class="w3-modal" id="rateModal">
+    <div class="w3-modal-content w3-card-4" style="width: 50%;">
+      <header class="w3-container w3-orange">
+        <span onclick="document.getElementById('rateModal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+        <h2>Rate</h2>
+      </header>
+      <div class="w3-container">
+        <form class="w3-container" id="rateform" role='form' action=<%="/torate/"+r._id %> method="POST" encType="multipart/form-data">
+          <div class="w3-container">
+            <p>Rate the Restaurant ( 1 - 10 )</p>
+            <table style='text-align: center; width: 100%;'>
+              <tr>
+                <th style='width: 10%;'>1</th>
+                <th style='width: 10%;'>2</th>
+                <th style='width: 10%;'>3</th>
+                <th style='width: 10%;'>4</th>
+                <th style='width: 10%;'>5</th>
+                <th style='width: 10%;'>6</th>
+                <th style='width: 10%;'>7</th>
+                <th style='width: 10%;'>8</th>
+                <th style='width: 10%;'>9</th>
+                <th style='width: 10%;'>10</th>
+              </tr>
+              <tr>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="1"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="2"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="3"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="4"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="5"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="6"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="7"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="8"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="9"/>
+                </td>
+                <td style='text-align: center;'>
+                  <input class="w3-radio" type="radio" name="score" value="10" checked/>
+                </td>
+                <input type="hidden" name="user" value=<%= session.id %> />
+              </tr>
+            </table>
+            <br />
+            <input id="ratebtn" type="submit" class="w3-button w3-orange"/>
+            <br />
+            <br />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div style="display:none" id="json-obj">
+      <%= JSON.stringify(r) %>
+  </div>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDszwiSL4BnFEt3isJVejMQiEW2ZWYUOH8&callback=initMap">
+    <!--
+      https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+    -->
+  </script>
+  <script>
+    function initMap() {
+      var title = "<%= r.name %>";
+      var myLatLng = {
+        lat: <%= r.address.coord.lat %>,
+        lng: <%= r.address.coord.lon %>
+      }
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: myLatLng
+      })
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: title
+      })
+    }
+  </script>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class="gr__waichun-381miniproject_mybluemix_net">
+  <head>
+    <title>
+      <% if(type=='edit') { %>
+        Edit Restaurant: <%= r.name %>
+      <% } else { %>
+        Add new restaurant
+      <% } %>
+    </title>
+    <link rel="stylesheet" type="text/css" href="/css/w3.css"/>
+  </head>
+  <body>
+    <header class="w3-container w3-blue">
+      <h1>
+        <% if(type=='edit') { %>
+          Edit Restaurant: <%= r.name %>
+        <% } else { %>
+          Add new restaurant
+        <% } %>
+      </h1>
+    </header>
+    <div class="w3-container w3-margin-top">
+      <form id="restform" action= <%= (type=='edit')?"/toedit/"+r._id:"/tocreate" %> method="post" enctype="multipart/form-data" class="w3-container w3-card-4">
+        <p>
+          <input name="name" id="rtnname" class="w3-input" type="text" required value= "<%= (type=='edit')?r.name:"" %>" >
+          <label class="w3-label w3-validate">Name</label>
+        </p>
+        <p>
+          <input name="borough" id="rtnborough" class="w3-input" type="text" value= "<%= (type=='edit')?r.borough:"" %>" >
+          <label class="w3-label w3-validate">Borough</label>
+        </p>
+        <p>
+          <input name="cuisine" id="rtncuisine" class="w3-input" type="text" value= "<%= (type=='edit')?r.cuisine:"" %>" >
+          <label class="w3-label w3-validate">Cuisine</label>
+        </p>
+        <p>
+          <input name="street" id="rtnstreet" class="w3-input" type="text" value= "<%= (type=='edit')?r.address.street:"" %>" >
+          <label class="w3-label w3-validate">Street</label>
+        </p>
+        <p>
+          <input name="building" id="rtnbuilding" class="w3-input" type="text" value= "<%= (type=='edit')?r.address.building:"" %>" >
+          <label class="w3-label w3-validate">Building</label>
+        </p>
+        <p>
+          <input name="zipcode" id="rtnzipcode" class="w3-input" type="text" value= "<%= (type=='edit')?r.address.zipcode:"" %>" >
+          <label class="w3-label w3-validate">Zipcode</label>
+        </p>
+        <p>
+          <input name="lat" id="rtnlat" class="w3-input" type="text" value="<%= (type=='edit')?r.address.coord.lat:"" %>" >
+          <label class="w3-label w3-validate">GPS Coordinates (latitude)</label>
+        </p>
+        <p>
+          <input name="lon" id="rtnlon" class="w3-input" type="text" value="<%= (type=='edit')?r.address.coord.lon:"" %>" >
+          <label class="w3-label w3-validate">GPS Coordinates (longitude)</label>
+        </p>
+        <p>
+          <input name="photo" id="rtnphoto" class="w3-input" accept="image/*" type="file"/>
+          <label class="w3-label w3-validate">Photo</label>
+        </p>
+        <input name="restaurant_id" id="rtnrestid" type="hidden" value="<%= (type=='edit')?r.restaurant_id:"0" %>" >
+        <p>
+          <input type="submit" id="rtnbtn" value="<%= (type=='edit')?"Submit":"Create" %>" class="w3-button w3-green"/>
+          <button type="reset" class="w3-button w3-blue">Reset</button>
+        </p>
+      </form>
+      <button onclick="window.location.href='/home'" class="w3-button w3-teal">Back to Home</button>
+    </div>
+  </body>
+</html>
