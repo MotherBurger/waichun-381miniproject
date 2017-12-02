@@ -55,6 +55,9 @@
           <label class="w3-label w3-validate">GPS Coordinates (longitude)</label>
         </p>
         <p>
+          <button onclick="window.open('https://www.gps-coordinates.net');" class='w3-input w3-blue'>Search for your GPS coordinate!</button>
+        </p>
+        <p>
           <input name="photo" id="rtnphoto" class="w3-input" accept="image/*" type="file"/>
           <label class="w3-label w3-validate">Photo</label>
         </p>
@@ -62,9 +65,9 @@
         <p>
           <input type="submit" id="rtnbtn" value="<%= (type=='edit')?"Submit":"Create" %>" class="w3-button w3-green"/>
           <button type="reset" class="w3-button w3-blue">Reset</button>
+          <button onclick="window.location.href='/home'" class="w3-button w3-teal">Back to Home</button>
         </p>
       </form>
-      <button onclick="window.location.href='/home'" class="w3-button w3-teal">Back to Home</button>
     </div>
   </body>
 </html>
