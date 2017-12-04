@@ -44,12 +44,8 @@ app.listen(serverport, function(){
 
 
 app.get('/',function(req,res) {
-  if (req.session.id) {
-    res.redirect("read");
-  } else {
-    res.status(200).render("login");
-    console.log(req.method + " " + req.path);
-  }
+  res.status(200).render("login");
+  console.log(req.method + " " + req.path);
 });
 
 app.get('/index',function(req,res) {
@@ -70,6 +66,7 @@ app.get('/register',function(req,res) {
 app.get('/logout', function(req,res){
   console.log(req.method + " " + req.path);
   console.log(req.session.id + " logged out.");
+  req.session.id = null;
   req.session = null;
   returnRender (res, 200, 'template', 'Logged Out', 'Logged out successfully!', '');
 });
@@ -669,7 +666,7 @@ function getFormAPI (res, req){
   var zipcode = '';
   var lat = '';
   var lon = '';
-  var owner = 'API Creation';
+  var owner = req.body.owner || 'API Creation';
   var photo = {};
   var grades = [];
 
@@ -748,12 +745,16 @@ function getPhoto (res, req){
     photo = req.files.photo;
     var filename = photo.name;
     var mimetype = photo.mimetype;
-    var uploadPath = __dirname + '/public/images/' + req.body.name + '.' + mimetype.replace('image/', '')
-    photo.mv(uploadPath, function(err){
-      if (err)
-        return returnRender (res, 500, 'template', 'Error', err, 'restaurant');
-    });
-    photo['uploadPath'] = uploadPath;
+    if (mimetype == "image/bmp" || mimetype == "image/gif" || mimetype == "image/jpeg") {
+      var uploadPath = __dirname + '/public/images/' + req.body.name + '.' + mimetype.replace('image/', '')
+      photo.mv(uploadPath, function(err){
+        if (err)
+          return returnRender (res, 500, 'template', 'Error', err, 'restaurant');
+      });
+      photo['uploadPath'] = uploadPath;
+    } else {
+      photo = {};
+    }
   }
   return photo;
 }
